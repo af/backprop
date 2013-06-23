@@ -1,7 +1,7 @@
 Backprop
 ========
 
-A small Backbone plugin that lets you use ECMAScript 5 properties on your Backbone models.
+A small Backbone plugin that lets you use [ECMAScript 5 properties][ES5props] on your Backbone models.
 Instead of doing:
 
 ```js
@@ -18,6 +18,9 @@ console.log(mymodel.attributes.name);   // prints 'Fred'
 ```
 
 You can install it from npm with `npm install backprop`.
+
+[ES5props]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+
 
 Usage
 -----
