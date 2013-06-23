@@ -35,7 +35,7 @@ Then in your models write something like:
 
 ```js
 var User = Backbone.Model.extend({
-    name: Backbone.property({ default: 'Jonas' }),
+    name: Backbone.property({ default: 'Jonas', coerce: String }),
     numFollowers: Backbone.property({ default: 0, coerce: Number });
 });
 ```

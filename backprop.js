@@ -1,6 +1,8 @@
 // TODO: type checking in properties
 // TODO: enumerable/configurable as options
 (function(window) {
+    "use strict";
+
     var Backprop = {};
 
     // Small class whose instances are used placeholders for the ES5 properties
@@ -14,13 +16,17 @@
         // Allow defaults to be specified right in the property (rather than
         // seperately in Backbone's usual defaults hash). This will override
         // whatever's in objProto.defaults for this property.
-        if (this.spec.default) {
+        var propSpec = this.spec;
+        if (propSpec.default) {
             objProto.defaults = objProto.defaults || {};
-            objProto.defaults[name] = this.spec.default;
+            objProto.defaults[name] = propSpec.default;
         }
         Object.defineProperty(objProto, name, {
             get: function() { return this.get(name); },
-            set: function(value) { this.set(name, value); },
+            set: function(value) {
+                if (typeof propSpec.coerce === 'function') value = propSpec.coerce(value);
+                this.set(name, value);
+            },
             configurable: true,
             enumerable: true
         });
