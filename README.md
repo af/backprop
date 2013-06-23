@@ -54,13 +54,13 @@ Backbone.property() arguments
 Backbone.property takes an optional hash as its only argument, and the following
 keys are supported to make dealing with properties a bit more pleasant:
 
-### `default`
+##### `default`
 Lets you specify a default value for the property. This will override anything that
 was set in the `defaults` hash for this attribute name. Basically just a convenient
 shorthand so you can keep your default value close to the property definition.
 
 
-### `coerce`
+##### `coerce`
 Specify a function that coerces the property's value any time it is set. For example:
 
 ```
