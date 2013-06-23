@@ -78,6 +78,11 @@ console.log(c.name === '42')    // prints true
 
 c.lives = '9';
 console.log(c.lives === 9)      // prints true
+
+
+##### `trim`
+If true, calls a trim method on the value before setting the attribute. This is
+handy for removing leading/trailing whitespace from strings.
 ```
 
 

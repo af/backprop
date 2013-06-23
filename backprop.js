@@ -32,6 +32,7 @@
             get: function() { return this.get(name); },
             set: function(value) {
                 if (typeof propSpec.coerce === 'function') value = propSpec.coerce(value);
+                if (propSpec.trim && (typeof value.trim === 'function')) value = value.trim();
                 this.set(name, value);
             },
             configurable: true,

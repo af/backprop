@@ -11,27 +11,27 @@ describe('Backprop monkeypatch', function() {
 });
 
 
-describe('Created model properties', function() {
+describe('A created model property', function() {
     Backprop.monkeypatch(Backbone);
     var M = Backbone.Model.extend({
-        name: Backbone.property({ default: 'asdf' }),
+        name: Backbone.property({ default: 'asdf', trim: true }),
         status: Backbone.property(),
     });
 
-    it('are readable with working defaults', function() {
+    it('is readable with working defaults', function() {
         var m = new M();
         assert.equal(m.name, 'asdf');
         assert.equal(m.attributes.name, 'asdf');
     });
 
-    it('are writable', function() {
+    it('is writable', function() {
         var m = new M();
         m.name = 'foo';
         assert.equal(m.name, 'foo');
         assert.equal(m.attributes.name, 'foo');
     });
 
-    it('work without an options hash', function() {
+    it('works without an options hash', function() {
         var m = new M();
         assert.strictEqual(m.status, undefined);
 
@@ -40,12 +40,18 @@ describe('Created model properties', function() {
         assert.strictEqual(m.attributes.status, 'away');
     });
 
-    it('throw errors if their names are already in use by Backbone', function() {
+    it('throws if their name is already in use by Backbone', function() {
         assert.throws(function() {
             var M2 = Backbone.Model.extend({
                 get: Backbone.property()
             });
         }, Error);
+    });
+
+    it('works with the trim option', function() {
+        var m = new M();
+        m.name = '  John ';
+        assert.strictEqual(m.name, 'John');
     });
 });
 
