@@ -16,7 +16,7 @@
         // Allow defaults to be specified right in the property (rather than
         // seperately in Backbone's usual defaults hash). This will override
         // whatever's in objProto.defaults for this property.
-        var propSpec = this.spec;
+        var propSpec = this.spec || {};
         if (propSpec.default) {
             objProto.defaults = objProto.defaults || {};
             objProto.defaults[name] = propSpec.default;

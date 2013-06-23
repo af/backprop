@@ -15,6 +15,7 @@ describe('Created model properties', function() {
     Backprop.monkeypatch(Backbone);
     var M = Backbone.Model.extend({
         name: Backbone.property({ default: 'asdf' }),
+        status: Backbone.property(),
     });
 
     it('are readable with working defaults', function() {
@@ -28,6 +29,15 @@ describe('Created model properties', function() {
         m.name = 'foo';
         assert.equal(m.name, 'foo');
         assert.equal(m.attributes.name, 'foo');
+    });
+
+    it('work without an options hash', function() {
+        var m = new M();
+        assert.strictEqual(m.status, undefined);
+
+        m.status = 'away';
+        assert.strictEqual(m.status, 'away');
+        assert.strictEqual(m.attributes.status, 'away');
     });
 });
 
