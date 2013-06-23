@@ -47,6 +47,45 @@ module systems like Browserify:
 var Backprop = require('backprop');
 ```
 
+Backbone.property() arguments
+-----------------------------
+
+Backbone.property takes an optional hash as its only argument, and the following
+keys are supported to make dealing with properties a bit more pleasant:
+
+`default`
+Lets you specify a default value for the property. This will override anything that
+was set in the `defaults` hash for this attribute name. Basically just a convenient
+shorthand so you can keep your default value close to the property definition.
+
+
+`coerce`
+Specify a function that coerces the property's value any time it is set. For example:
+
+```
+var Cat = Backbone.Model.extend({
+    name: Backbone.property({ coerce: String }),
+    lives: Backbone.property({ coerce: Number })
+});
+var c = new Cat;
+
+c.name = 42;
+console.log(c.name === '42')    // prints true
+
+c.lives = '9';
+console.log(c.lives === 9)      // prints true
+```
+
+
+Running tests
+-------------
+
+```
+git clone git://github.com/af/backprop.git
+cd backprop
+npm test
+```
+
 Credits
 -------
 
