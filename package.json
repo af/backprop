@@ -1,6 +1,6 @@
 {
   "name": "backprop",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Use ES5 properties with Backbone. Goodbye get() and set()!",
   "main": "backprop.js",
   "scripts": {
