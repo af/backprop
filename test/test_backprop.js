@@ -39,6 +39,14 @@ describe('Created model properties', function() {
         assert.strictEqual(m.status, 'away');
         assert.strictEqual(m.attributes.status, 'away');
     });
+
+    it('throw errors if their names are already in use by Backbone', function() {
+        assert.throws(function() {
+            var M2 = Backbone.Model.extend({
+                get: Backbone.property()
+            });
+        }, Error);
+    });
 });
 
 

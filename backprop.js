@@ -1,5 +1,5 @@
-// TODO: type checking in properties
 // TODO: enumerable/configurable as options
+// TODO: choice option
 (function(window) {
     "use strict";
 
@@ -17,6 +17,13 @@
         // seperately in Backbone's usual defaults hash). This will override
         // whatever's in objProto.defaults for this property.
         var propSpec = this.spec || {};
+
+        // Don't allow property names to shadow ones that are already defined
+        // (eg. by Backbone.Model.prototype):
+        if (name in objProto.constructor.__super__) {
+            throw new Error('The name ' + name + ' is already used by this model');
+        }
+
         if (propSpec.default) {
             objProto.defaults = objProto.defaults || {};
             objProto.defaults[name] = propSpec.default;
