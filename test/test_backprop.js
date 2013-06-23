@@ -20,12 +20,14 @@ describe('Created model properties', function() {
     it('are readable with working defaults', function() {
         var m = new M();
         assert.equal(m.name, 'asdf');
+        assert.equal(m.attributes.name, 'asdf');
     });
 
     it('are writable', function() {
         var m = new M();
         m.name = 'foo';
         assert.equal(m.name, 'foo');
+        assert.equal(m.attributes.name, 'foo');
     });
 });
 
@@ -43,12 +45,15 @@ describe('Property type coercion', function() {
 
         m.myNum = 42;
         assert.strictEqual(m.myNum, 42);
+        assert.strictEqual(m.attributes.myNum, 42);
 
         m.myNum = '123';
         assert.strictEqual(m.myNum, 123);
+        assert.strictEqual(m.attributes.myNum, 123);
 
         m.myNum = 'asdf';
         assert.ok(isNaN(m.myNum));
+        assert.ok(isNaN(m.attributes.myNum));
     });
 
     it('works for strings', function() {
@@ -56,9 +61,11 @@ describe('Property type coercion', function() {
 
         m.myString = 'asdf';
         assert.strictEqual(m.myString, 'asdf');
+        assert.strictEqual(m.attributes.myString, 'asdf');
 
         m.myString = 123;
         assert.strictEqual(m.myString, '123');
+        assert.strictEqual(m.attributes.myString, '123');
     });
 
     it('works for booleans', function() {
@@ -66,16 +73,21 @@ describe('Property type coercion', function() {
 
         m.myBool = true;
         assert.strictEqual(m.myBool, true);
+        assert.strictEqual(m.attributes.myBool, true);
 
         m.myBool = undefined;
         assert.strictEqual(m.myBool, false);
+        assert.strictEqual(m.attributes.myBool, false);
 
         m.myBool = 123;
         assert.strictEqual(m.myBool, true);
+        assert.strictEqual(m.attributes.myBool, true);
         m.myBool = 0;
         assert.strictEqual(m.myBool, false);
+        assert.strictEqual(m.attributes.myBool, false);
 
         m.myBool = 'false';
         assert.strictEqual(m.myBool, true);     // As expected when calling Boolean('false');
+        assert.strictEqual(m.attributes.myBool, true);
     });
 });
