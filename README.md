@@ -64,7 +64,12 @@ shorthand so you can keep your default value close to the property definition.
 
 
 ##### `coerce`
-Specify a function that coerces the property's value any time it is set. For example:
+Specify a function that transforms the property's value before it is set. Some useful
+Javascript functions to pass in here include `String`, `Number`, `Boolean`, `parseInt`,
+(although you might want to wrap it to make sure its second argument is 10), `parseFloat`,
+and `encodeURIComponent`. Of course, you can also provide your own.
+
+For example:
 
 ```
 var Cat = Backbone.Model.extend({
@@ -78,12 +83,11 @@ console.log(c.name === '42')    // prints true
 
 c.lives = '9';
 console.log(c.lives === 9)      // prints true
-
+```
 
 ##### `trim`
 If true, calls a trim method on the value before setting the attribute. This is
 handy for removing leading/trailing whitespace from strings.
-```
 
 
 Running tests
