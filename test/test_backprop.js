@@ -116,6 +116,7 @@ describe('Property type coercion', function() {
         myString: Backbone.property({ coerce: String }),
         myNum: Backbone.property({ coerce: Number }),
         myBool: Backbone.property({ coerce: Boolean }),
+        myInt: Backbone.property({ coerce: parseInt }),
     });
 
     it('works for numbers', function() {
@@ -167,5 +168,21 @@ describe('Property type coercion', function() {
         m.myBool = 'false';
         assert.strictEqual(m.myBool, true);     // As expected when calling Boolean('false');
         assert.strictEqual(m.attributes.myBool, true);
+    });
+
+    it('works for parseInt', function() {
+        var m = new M();
+
+        m.myInt = 23;
+        assert.strictEqual(m.myInt, 23);
+        assert.strictEqual(m.attributes.myInt, 23);
+
+        m.myInt = '45 is the number';
+        assert.strictEqual(m.myInt, 45);
+        assert.strictEqual(m.attributes.myInt, 45);
+
+        m.myInt = 'asdfasdf 14';
+        assert.ok(isNaN(m.myInt));
+        assert.ok(isNaN(m.attributes.myInt));
     });
 });
