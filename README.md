@@ -91,6 +91,24 @@ If true, calls a trim method on the value before setting the attribute. This is
 handy for removing leading/trailing whitespace from strings.
 
 
+##### `max` and `min`
+Specify values that the value must be less than/greater than (these can be used separately
+or together). Most useful for numbers, but will work with any values that work with `<` and `>`.
+
+```js
+var Beer = Backbone.Model.extend({
+    milliliters = Backbone.property({ coerce: Number, min: 330, max: 1000 })
+});
+var b = new Beer;
+
+b.milliliters = 100;
+console.log(b.milliliters);     // prints 330
+
+b.milliliters = 2000;
+console.log(b.milliliters);     // prints 1000
+```
+
+
 Running tests
 -------------
 

@@ -33,6 +33,9 @@
             set: function(value) {
                 if (typeof propSpec.coerce === 'function') value = propSpec.coerce(value);
                 if (propSpec.trim && (typeof value.trim === 'function')) value = value.trim();
+                if (propSpec.max && (value > propSpec.max)) value = propSpec.max;
+                if (propSpec.min && (value < propSpec.min)) value = propSpec.min;
+
                 this.set(name, value);
             },
             configurable: true,

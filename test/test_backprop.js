@@ -56,6 +56,47 @@ describe('A created model property', function() {
 });
 
 
+describe('Max and min', function() {
+    Backprop.monkeypatch(Backbone);
+    var M = Backbone.Model.extend({
+        myNum: Backbone.property({ coerce: Number, min: 100, max: 200 }),
+        minOnly: Backbone.property({ coerce: Number, min: 100 }),
+        maxOnly: Backbone.property({ coerce: Number, max: 200 }),
+        strTest: Backbone.property({ coerce: String, min: 'c', max: 'f' }),
+    });
+
+    it('work when both are specified', function() {
+        var m = new M;
+        m.myNum = 20;
+        assert.strictEqual(m.myNum, 100);
+
+        m.myNum = 201;
+        assert.strictEqual(m.myNum, 200);
+    });
+
+    it('work when only min is used', function() {
+        var m = new M;
+        m.minOnly = 20;
+        assert.strictEqual(m.minOnly, 100);
+    });
+
+    it('work when only max is used', function() {
+        var m = new M;
+        m.maxOnly = 205;
+        assert.strictEqual(m.maxOnly, 200);
+    });
+
+    it('work with strings', function() {
+        var m = new M;
+        m.strTest = 'abc';
+        assert.strictEqual(m.strTest, 'c');
+
+        m.strTest = 'zzz';
+        assert.strictEqual(m.strTest, 'f');
+    });
+});
+
+
 describe('Property type coercion', function() {
     Backprop.monkeypatch(Backbone);
     var M = Backbone.Model.extend({
