@@ -9,15 +9,16 @@ mymodel.set('name', 'Bob');
 console.log(mymodel.get('name'));   // prints 'Bob'
 ```
 
-with Backprop you can write this instead:
+with Backprop you can write this instead (and it will have the same effect):
 
 ```js
 mymodel.name = 'Fred';
 console.log(mymodel.name);              // prints 'Fred'
-console.log(mymodel.attributes.name);   // prints 'Fred'
 ```
 
-You can install it from npm with `npm install backprop`.
+Backbone's `get()` and `set()` will still work if you need them (eg. using `set()` with `{validate: true}`).
+
+You can install Backprop from npm with `npm install backprop`.
 
 [ES5props]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
 
