@@ -48,6 +48,19 @@ describe('A created model property', function() {
         }, Error);
     });
 
+    it('triggers change events when modified', function() {
+        var m = new M();
+        var x = 0;
+        var y = 0;
+
+        m.on('change', function() { x++; });
+        m.on('change:name', function() { y++; });
+
+        m.name = 'Ted';
+        assert.strictEqual(x, 1);
+        assert.strictEqual(y, 1);
+    });
+
     it('works with the trim option', function() {
         var m = new M();
         m.name = '  John ';
