@@ -109,6 +109,13 @@ console.log(b.milliliters);     // prints 1000
 ```
 
 
+Browser Support
+---------------
+
+Any browser with decent ES5 support should work fine, but IE8 and below need not apply.
+For more complete support info see [this table](http://kangax.github.io/es5-compat-table/#Object.defineProperty).
+
+
 Running tests
 -------------
 
