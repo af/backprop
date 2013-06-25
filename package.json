@@ -16,7 +16,7 @@
     "ES5"
   ],
   "author": "Aaron Franks",
-  "license": "BSD",
+  "license": "MIT",
 
   "dependencies": {},
   "peerDependencies": {
