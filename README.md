@@ -1,6 +1,7 @@
 Backprop
 ========
 [![Build Status](https://secure.travis-ci.org/af/backprop.png)](http://travis-ci.org/af/backprop)
+[![NPM version](https://badge.fury.io/js/backprop.png)](http://badge.fury.io/js/backprop)
 
 A small Backbone plugin that lets you use [ECMAScript 5 properties][ES5props] on your Backbone models.
 Instead of doing:
