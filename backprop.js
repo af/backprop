@@ -54,7 +54,7 @@
         // Override Backbone.Model.extend with our custom version:
         var originalExtend = Backbone.Model.extend;
         Backbone.Model.extend = function(protoAttrs, classAttrs) {
-            var objConstructor = originalExtend.apply(Backbone.Model, [].slice.call(arguments));
+            var objConstructor = originalExtend.apply(this, [].slice.call(arguments));
 
             // Go through the prototype attributes and create ES5 properties for every
             // attribute that used Backbone.property():
