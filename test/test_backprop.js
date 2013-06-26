@@ -16,6 +16,8 @@ describe('A created model property', function() {
     var M = Backbone.Model.extend({
         name: Backbone.property({ default: 'asdf', trim: true }),
         status: Backbone.property(),
+
+        doStuff: function() {}
     });
 
     it('is readable with working defaults', function() {
@@ -46,6 +48,19 @@ describe('A created model property', function() {
                 get: Backbone.property()
             });
         }, Error);
+    });
+
+    it('is passed along to subclasses', function() {
+        var N = M.extend({ foo: 'asdf' });
+        var n = new N();
+        assert.strictEqual(n.status, undefined);
+
+        n.status = 'away';
+        assert.strictEqual(n.status, 'away');
+        assert.strictEqual(n.attributes.status, 'away');
+
+        // Ensure normal inheritance of methods still works as well:
+        assert.strictEqual(typeof n.doStuff, 'function');
     });
 
     it('triggers change events when modified', function() {
