@@ -84,6 +84,47 @@ describe('A created model property', function() {
 });
 
 
+describe('Property choice option', function() {
+    Backprop.monkeypatch(Backbone);
+    var M = Backbone.Model.extend({
+        category: Backbone.property({ choices: ['books', 'electronics', 'music'] }),
+        genre: Backbone.property({ choices: ['action', 'comedy'], default: 'action' }),
+        price: Backbone.property({ coerce: Number, choices: [0.99, 1.50, '9.99'] }),
+    });
+
+    it('works with strings', function() {
+        var m = new M;
+        m.category = 'asdf';
+        assert.strictEqual(m.category, undefined);
+
+        m.category = 'electronics';
+        assert.strictEqual(m.category, 'electronics');
+
+        // If setting an invalid value is attempted, it keeps its current one:
+        m.category = 'foo';
+        assert.strictEqual(m.category, 'electronics');
+
+        m.category = 'music';
+        assert.strictEqual(m.category, 'music');
+    });
+
+    it('works with default values', function() {
+        var m = new M;
+
+        // Uses the default if one was set:
+        m.genre = 'asdf';
+        assert.strictEqual(m.genre, 'action');
+
+        // If setting an invalid value is attempted, it still keeps its current one:
+        m.genre = 'foo';
+        assert.strictEqual(m.genre, 'action');
+
+        m.genre = 'comedy';
+        assert.strictEqual(m.genre, 'comedy');
+    });
+});
+
+
 describe('Max and min', function() {
     Backprop.monkeypatch(Backbone);
     var M = Backbone.Model.extend({

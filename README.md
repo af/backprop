@@ -111,6 +111,36 @@ console.log(b.milliliters);     // prints 1000
 ```
 
 
+##### `choices`
+Specify an array with an enumeration of acceptable values for the property. If a value
+not in the array is assigned to the property, the value set to the model will be:
+
+    a) the property's current value, if one was set previously (ie. the assignment will fail)
+    b) the property's `default` value (if one was speficied)
+    c) `undefined`
+
+```js
+var Beer = Backbone.Model.extend({
+    style: Backbone.property({ choices: ['IPA', 'stout', 'ESB'], default: 'IPA' });
+    type: Backbone.property({ choices: ['on_tap', 'bottle'] });
+});
+
+var b = new Beer;
+
+b.style = 'asdf';
+console.log(b.style);           // prints 'IPA'
+
+b.type = 'foooo';
+console.log(b.type);           // prints undefined
+
+b.type = 'on_tap';
+console.log(b.type);           // prints 'on_tap'
+
+b.type = 'foooo';
+console.log(b.type);           // prints 'on_tap'
+```
+
+
 Browser Support
 ---------------
 

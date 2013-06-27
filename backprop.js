@@ -1,5 +1,3 @@
-// TODO: enumerable/configurable as options
-// TODO: choice option
 (function(window) {
     "use strict";
 
@@ -32,6 +30,15 @@
             get: function() { return this.get(name); },
             set: function(value) {
                 if (typeof propSpec.coerce === 'function') value = propSpec.coerce(value);
+
+                var choices = propSpec.choices;
+                if (choices && choices.constructor && choices.constructor.name === 'Array') {
+                    if (choices.indexOf(value) === -1) {
+                        var currentVal = this.get(name);
+                        value = currentVal || objProto.defaults[name] || undefined;
+                    }
+                }
+
                 if (propSpec.trim && (typeof value.trim === 'function')) value = value.trim();
                 if (propSpec.max && (value > propSpec.max)) value = propSpec.max;
                 if (propSpec.min && (value < propSpec.min)) value = propSpec.min;
@@ -42,6 +49,7 @@
             enumerable: true
         });
     };
+
 
     // Monkeypatch Backbone to do two things:
     //  * Add a new Backbone.property function, used to set up properties on models
