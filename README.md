@@ -4,7 +4,7 @@ Backprop
 [![NPM version](https://badge.fury.io/js/backprop.png)](http://badge.fury.io/js/backprop)
 
 A small Backbone plugin that lets you use [ECMAScript 5 properties][ES5props] on your Backbone models.
-Instead of doing:
+Instead of writing:
 
 ```js
 mymodel.set('name', 'Bob');
@@ -57,14 +57,13 @@ var Backprop = require('backprop');
 Backbone.property() arguments
 -----------------------------
 
-Backbone.property takes an optional hash as its only argument, and the following
-keys are supported to make dealing with properties a bit more pleasant:
+Backbone.property takes an optional hash as its only argument. The following
+keys are supported to pre-filter data and make dealing with properties a bit more pleasant:
 
 ##### `default`
 Lets you specify a default value for the property. This will override anything that
-was set in the `defaults` hash for this attribute name. Basically just a convenient
+was set in the model's `defaults` hash for this attribute name. It's basically just a convenient
 shorthand so you can keep your default value close to the property definition.
-
 
 ##### `coerce`
 Specify a function that transforms the property's value before it is set. Some useful
@@ -141,11 +140,13 @@ console.log(b.type);           // prints 'on_tap'
 ```
 
 
-Browser Support
+Compatibility
 ---------------
 
-Any browser with decent ES5 support should work fine, but IE8 and below need not apply.
+Any browser with decent ES5 support should work fine, but IE8 and below do not fit in that category.
 For more complete support info see [this table](http://kangax.github.io/es5-compat-table/#Object.defineProperty).
+
+The plugin has been tested with Backbone v1.0.0, not sure if previous releases will work correctly.
 
 
 Running tests
