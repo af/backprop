@@ -124,6 +124,37 @@ describe('Property choice option', function() {
     });
 });
 
+describe('setProperties() method', function() {
+    Backprop.monkeypatch(Backbone);
+    var M = Backbone.Model.extend({
+        category: Backbone.property({ choices: ['books', 'electronics', 'music'] }),
+        genre: Backbone.property({ choices: ['action', 'comedy'], default: 'action' }),
+        price: Backbone.property({ coerce: Number, choices: [0.95, 1.50, '9.99'] }),
+    });
+
+    it('sets values on model instances', function() {
+        var m = new M;
+        m.setProperties({ category: 'books', genre: 'comedy' });
+        assert.strictEqual(m.category, 'books');
+        assert.strictEqual(m.attributes.category, 'books');
+
+        assert.strictEqual(m.genre, 'comedy');
+        assert.strictEqual(m.attributes.genre, 'comedy');
+    });
+
+    it('applies property transforms before setting', function() {
+        var m = new M;
+        m.setProperties({ price: 1.23 });
+        assert.strictEqual(m.price, undefined);
+        assert.strictEqual(m.attributes.price, undefined);
+    });
+
+    // TODO:
+    // make _schema non-enumerable
+    // it('works with { validate: true }'), function() {
+    // it('works with { silent: true }'), function() {
+});
+
 
 describe('Max and min', function() {
     Backprop.monkeypatch(Backbone);
