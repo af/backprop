@@ -126,10 +126,15 @@ describe('Property choice option', function() {
 
 describe('setProperties() method', function() {
     Backprop.monkeypatch(Backbone);
+
+    var categoryConfig = { choices: ['books', 'electronics', 'music'] };
+    var genreConfig = { choices: ['action', 'comedy'], default: 'action' };
+    var priceConfig = { coerce: Number, choices: [0.95, 1.50, '9.99'] };
+
     var M = Backbone.Model.extend({
-        category: Backbone.property({ choices: ['books', 'electronics', 'music'] }),
-        genre: Backbone.property({ choices: ['action', 'comedy'], default: 'action' }),
-        price: Backbone.property({ coerce: Number, choices: [0.95, 1.50, '9.99'] }),
+        category: Backbone.property(categoryConfig),
+        genre: Backbone.property(genreConfig),
+        price: Backbone.property(priceConfig),
     });
 
     it('sets values on model instances', function() {
@@ -149,8 +154,13 @@ describe('setProperties() method', function() {
         assert.strictEqual(m.attributes.price, undefined);
     });
 
+    it('has access to a _schema property on the constructor', function() {
+        assert.strictEqual(M._schema.category, categoryConfig);
+        assert.strictEqual(M._schema.genre, genreConfig);
+        assert.strictEqual(M._schema.price, priceConfig);
+    });
+
     // TODO:
-    // make _schema non-enumerable
     // it('works with { validate: true }'), function() {
     // it('works with { silent: true }'), function() {
 });

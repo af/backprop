@@ -76,7 +76,7 @@
             // The difference is that this will apply transforms for all of the
             // properties before setting.
             protoAttrs.setProperties = function(attrs, options) {
-                var schema = this._schema || {};
+                var schema = this.constructor._schema || {};
                 for (var name in attrs) {
                     var propSpec = schema[name] || {};
                     attrs[name] = transformValue(propSpec, attrs[name], this.get(name));
@@ -89,12 +89,12 @@
 
             // Go through the prototype attributes and create ES5 properties for every
             // attribute that used Backbone.property():
-            objConstructor.prototype._schema = {};
+            objConstructor._schema = {};
             for (var name in protoAttrs) {
                 var val = protoAttrs[name];
                 if (val instanceof PropPlaceholder) {
                     val.createProperty(objConstructor.prototype, name);
-                    objConstructor.prototype._schema[name] = val.spec;
+                    objConstructor._schema[name] = val.spec;
                 }
             }
             return objConstructor;
