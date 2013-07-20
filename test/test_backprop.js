@@ -160,9 +160,43 @@ describe('setProperties() method', function() {
         assert.strictEqual(M._schema.price, priceConfig);
     });
 
-    // TODO:
-    // it('works with { validate: true }'), function() {
-    // it('works with { silent: true }'), function() {
+    it('works with { validate: true }', function() {
+        var m = new M;
+        var count = 0;
+        M.prototype.validate = function() { count++; };
+
+        // validate() is called if { validate: true } is passed:
+        m.setProperties({ category: 'electronics' }, { validate: true });
+        assert.strictEqual(count, 1);
+        assert.strictEqual(m.category, 'electronics');
+
+        // validate() is not called if { validate: true } is NOT passed:
+        m.setProperties({ category: 'electronics' }, {});
+        assert.strictEqual(count, 1);
+    });
+
+    it('works with { silent: true }', function() {
+        var m = new M;
+        var count = 0;
+
+        m.on('change', function() { count++; });
+        m.setProperties({ category: 'electronics' });
+        assert.strictEqual(count, 1);
+
+        m.setProperties({ category: 'electronics' }, { silent: true });
+        assert.strictEqual(count, 1);
+    });
+
+    it('works with { silent: true } for granular change listeners', function() {
+        var m = new M;
+        var count = 0;
+
+        m.on('change:genre', function() { count++; });
+        m.setProperties({ genre: 'comedy' });
+        assert.strictEqual(count, 1);
+        m.setProperties({ genre: 'action' }, { silent: true });
+        assert.strictEqual(count, 1);
+    });
 });
 
 
