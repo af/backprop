@@ -197,6 +197,17 @@ describe('setProperties() method', function() {
         m.setProperties({ genre: 'action' }, { silent: true });
         assert.strictEqual(count, 1);
     });
+
+    it('allows unspecified properties through as regular Backbone attrs', function() {
+        var m = new M;
+        m.setProperties({ foo: 'baz' });
+        assert.strictEqual(m.get('foo'), 'baz');
+
+        // Mixed example:
+        m.setProperties({ price: 0.95, x: 23 });
+        assert.strictEqual(m.price, 0.95);
+        assert.strictEqual(m.get('x'), 23);
+    })
 });
 
 

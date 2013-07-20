@@ -139,6 +139,24 @@ b.type = 'foooo';
 console.log(b.type);           // prints 'on_tap'
 ```
 
+`setProperties()`
+-----------------
+
+As of version 0.2.0, backprop also adds a `setProperties()` method to model instances. This
+method accepts two positional arguments: the first is a hash of properties to set, and the
+second is an options object that is passed to Backbone's `set()` method behind the scenes.
+The second argument can be used to pass `{ validate: true }` or `{ silent: true }` for your
+properties, while still having the data passed through Backprop's pre-filters (eg. `choices`,
+`max`, `min`, etc).
+
+```
+var b = new Beer;
+b.setProperties({ style: 'ESB', type: 'on_tap' }, { silent: true });
+```
+
+Note that if you pass any keys in `setProperties()`'s first hash that are not defined as
+properties, they will be set on the model as regular Backbone attributes.
+
 
 Compatibility
 ---------------
