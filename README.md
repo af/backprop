@@ -18,7 +18,7 @@ mymodel.name = 'Fred';
 console.log(mymodel.name);              // prints 'Fred'
 ```
 
-Backbone's `get()` and `set()` will still work if you need them (eg. using `set()` with `{validate: true}`).
+Backbone's `get()` and `set()` will still work if you need them. For example, you could use `set()` for it's `{validate: true}` option, although Backprop also provides a `setProperties()` method that accepts the same options as `set()` (see below).
 
 You can install Backprop from npm with `npm install backprop`.
 
@@ -139,8 +139,8 @@ b.type = 'foooo';
 console.log(b.type);           // prints 'on_tap'
 ```
 
-`setProperties()`
------------------
+The setProperties method
+------------------------
 
 As of version 0.2.0, backprop also adds a `setProperties()` method to model instances. This
 method accepts two positional arguments: the first is a hash of properties to set, and the
