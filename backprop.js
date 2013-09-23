@@ -40,7 +40,7 @@
             throw new Error('The name ' + name + ' is already used by this model');
         }
 
-        if (propSpec.default) {
+        if (typeof propSpec.default !== 'undefined') {
             objProto.defaults = objProto.defaults || {};
             objProto.defaults[name] = propSpec.default;
         }

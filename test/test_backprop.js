@@ -16,6 +16,7 @@ describe('A created model property', function() {
     var M = Backbone.Model.extend({
         name: Backbone.property({ default: 'asdf', trim: true }),
         status: Backbone.property(),
+        isAvailable: Backbone.property({ coerce: Boolean, default: false }),
 
         doStuff: function() {}
     });
@@ -24,6 +25,12 @@ describe('A created model property', function() {
         var m = new M();
         assert.equal(m.name, 'asdf');
         assert.equal(m.attributes.name, 'asdf');
+    });
+
+    it('has a working default even if it is falsy', function() {
+        var m = new M();
+        assert.strictEqual(m.isAvailable, false);
+        assert.strictEqual(m.attributes.isAvailable, false);
     });
 
     it('is writable', function() {
