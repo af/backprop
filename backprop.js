@@ -119,6 +119,7 @@
         };
     };
 
+    Backprop.Generic = makeShorthandProp(function(x) { return x; });
     Backprop.Boolean = makeShorthandProp(Boolean);
     Backprop.String = makeShorthandProp(String);
     Backprop.Number = makeShorthandProp(Number);

@@ -380,4 +380,20 @@ describe('Shorthand properties', function() {
         assert.strictEqual(m.likes, 27);
         assert.strictEqual(m.attributes.likes, 27);
     });
+
+    it('works for Backprop.Generic', function() {
+        var M2 = Backbone.Model.extend({
+            foo: Backprop.Generic()
+        });
+
+        // Ensure that Backprop.Generic properties will accept any type.
+        var m = new M2();
+        m.foo = '27.34';
+        assert.strictEqual(m.foo, '27.34');
+        assert.strictEqual(m.attributes.foo, '27.34');
+
+        m.foo = 23;
+        assert.strictEqual(m.foo, 23);
+        assert.strictEqual(m.attributes.foo, 23);
+    });
 });
