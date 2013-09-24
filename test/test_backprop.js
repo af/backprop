@@ -335,3 +335,41 @@ describe('Property type coercion', function() {
         assert.ok(isNaN(m.attributes.myInt));
     });
 });
+
+
+describe('Shorthand properties', function() {
+    Backprop.monkeypatch(Backbone);
+    var M = Backbone.Model.extend({
+        name: Backprop.String({ default: 'asdf', trim: true }),
+        age: Backprop.Number({ coerce: function(x) { return x + 1; } }),
+        isAdmin: Backprop.Boolean({ default: false }),
+    });
+
+    it('are readable with working defaults', function() {
+        var m = new M();
+        assert.strictEqual(m.name, 'asdf');
+        assert.strictEqual(m.attributes.name, 'asdf');
+
+        assert.strictEqual(m.isAdmin, false);
+        assert.strictEqual(m.attributes.isAdmin, false);
+    });
+
+    it('are writable', function() {
+        var m = new M();
+        m.name = 'foo';
+        assert.strictEqual(m.name, 'foo');
+        assert.strictEqual(m.attributes.name, 'foo');
+
+        m.isAdmin = true;
+        assert.strictEqual(m.isAdmin, true);
+        assert.strictEqual(m.attributes.isAdmin, true);
+    });
+
+    it('apply the the coerce function after type casting', function() {
+        var m = new M();
+        m.age = '27';
+        // Coerce function adds one to the given number:
+        assert.strictEqual(m.age, 28);
+        assert.strictEqual(m.attributes.age, 28);
+    });
+});

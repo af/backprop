@@ -101,6 +101,28 @@
         };
     };
 
+    // Allow use of shorthand properties like "myprop: Backprop.Boolean()". This avoids
+    // having to pass in an explicit coerce function when you are just casting to a JS type.
+    // If you do pass in a coerce function, it will still work, but the type cast will
+    // be applied first.
+    var makeShorthandProp = function(typeCoerce) {
+        return function(specObj) {
+            specObj = specObj || {};
+            var innerCoerce = specObj.coerce;
+
+            if (typeof innerCoerce === 'function') {
+                specObj.coerce = function(x) { return innerCoerce(typeCoerce(x)); };
+            } else {
+                specObj.coerce = typeCoerce;
+            }
+            return new PropPlaceholder(specObj);
+        };
+    };
+
+    Backprop.Boolean = makeShorthandProp(Boolean);
+    Backprop.String = makeShorthandProp(String);
+    Backprop.Number = makeShorthandProp(Number);
+
     // Export for Node/Browserify, or fallback to a window assignment:
     if (typeof module !== 'undefined' && module.exports) module.exports = Backprop;
     else window.Backprop = Backprop;
