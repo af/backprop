@@ -342,6 +342,7 @@ describe('Shorthand properties', function() {
     var M = Backbone.Model.extend({
         name: Backprop.String({ default: 'asdf', trim: true }),
         age: Backprop.Number({ coerce: function(x) { return x + 1; } }),
+        likes: Backprop.Integer(),
         isAdmin: Backprop.Boolean({ default: false }),
     });
 
@@ -371,5 +372,12 @@ describe('Shorthand properties', function() {
         // Coerce function adds one to the given number:
         assert.strictEqual(m.age, 28);
         assert.strictEqual(m.attributes.age, 28);
+    });
+
+    it('works for Backprop.Integer', function() {
+        var m = new M();
+        m.likes = '27.34';
+        assert.strictEqual(m.likes, 27);
+        assert.strictEqual(m.attributes.likes, 27);
     });
 });

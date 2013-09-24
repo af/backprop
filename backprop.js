@@ -122,6 +122,7 @@
     Backprop.Boolean = makeShorthandProp(Boolean);
     Backprop.String = makeShorthandProp(String);
     Backprop.Number = makeShorthandProp(Number);
+    Backprop.Integer = makeShorthandProp(function(x) { return parseInt(x, 10); });
 
     // Export for Node/Browserify, or fallback to a window assignment:
     if (typeof module !== 'undefined' && module.exports) module.exports = Backprop;
