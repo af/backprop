@@ -63,6 +63,7 @@
     //  * Replace Backbone.Model.extend with a version that parses property definitions
     Backprop.monkeypatch = function(Backbone) {
         Backbone.property = function(specObj) {
+            console.log('Backbone.property() is deprecated- use Backprop.Generic instead');
             return new PropPlaceholder(specObj);
         };
 
