@@ -14,9 +14,9 @@ describe('Backprop monkeypatch', function() {
 describe('A created model property', function() {
     Backprop.monkeypatch(Backbone);
     var M = Backbone.Model.extend({
-        name: Backbone.property({ default: 'asdf', trim: true }),
-        status: Backbone.property(),
-        isAvailable: Backbone.property({ coerce: Boolean, default: false }),
+        name: Backprop.String({ default: 'asdf', trim: true }),
+        status: Backprop.String(),
+        isAvailable: Backprop.Boolean({ default: false }),
 
         doStuff: function() {}
     });
@@ -52,7 +52,7 @@ describe('A created model property', function() {
     it('throws if their name is already in use by Backbone', function() {
         assert.throws(function() {
             var M2 = Backbone.Model.extend({
-                get: Backbone.property()
+                get: Backprop.Generic()
             });
         }, Error);
     });
@@ -94,9 +94,9 @@ describe('A created model property', function() {
 describe('Property choice option', function() {
     Backprop.monkeypatch(Backbone);
     var M = Backbone.Model.extend({
-        category: Backbone.property({ choices: ['books', 'electronics', 'music'] }),
-        genre: Backbone.property({ choices: ['action', 'comedy'], default: 'action' }),
-        price: Backbone.property({ coerce: Number, choices: [0.99, 1.50, '9.99'] }),
+        category: Backprop.String({ choices: ['books', 'electronics', 'music'] }),
+        genre: Backprop.String({ choices: ['action', 'comedy'], default: 'action' }),
+        price: Backprop.Number({ choices: [0.99, 1.50, '9.99'] }),
     });
 
     it('works with strings', function() {
@@ -139,9 +139,9 @@ describe('setProperties() method', function() {
     var priceConfig = { coerce: Number, choices: [0.95, 1.50, '9.99'] };
 
     var M = Backbone.Model.extend({
-        category: Backbone.property(categoryConfig),
-        genre: Backbone.property(genreConfig),
-        price: Backbone.property(priceConfig),
+        category: Backprop.String(categoryConfig),
+        genre: Backprop.String(genreConfig),
+        price: Backprop.Number(priceConfig),
     });
 
     it('sets values on model instances', function() {
@@ -221,10 +221,10 @@ describe('setProperties() method', function() {
 describe('Max and min', function() {
     Backprop.monkeypatch(Backbone);
     var M = Backbone.Model.extend({
-        myNum: Backbone.property({ coerce: Number, min: 100, max: 200 }),
-        minOnly: Backbone.property({ coerce: Number, min: 100 }),
-        maxOnly: Backbone.property({ coerce: Number, max: 200 }),
-        strTest: Backbone.property({ coerce: String, min: 'c', max: 'f' }),
+        myNum: Backprop.Number({ min: 100, max: 200 }),
+        minOnly: Backprop.Number({ min: 100 }),
+        maxOnly: Backprop.Number({ max: 200 }),
+        strTest: Backprop.String({ min: 'c', max: 'f' }),
     });
 
     it('work when both are specified', function() {
@@ -262,10 +262,10 @@ describe('Max and min', function() {
 describe('Property type coercion', function() {
     Backprop.monkeypatch(Backbone);
     var M = Backbone.Model.extend({
-        myString: Backbone.property({ coerce: String }),
-        myNum: Backbone.property({ coerce: Number }),
-        myBool: Backbone.property({ coerce: Boolean }),
-        myInt: Backbone.property({ coerce: parseInt }),
+        myString: Backprop.String(),
+        myNum: Backprop.Number(),
+        myBool: Backprop.Boolean(),
+        myInt: Backprop.Integer()
     });
 
     it('works for numbers', function() {
