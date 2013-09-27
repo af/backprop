@@ -396,4 +396,27 @@ describe('Shorthand properties', function() {
         assert.strictEqual(m.foo, 23);
         assert.strictEqual(m.attributes.foo, 23);
     });
+
+    it('works for Backprop.Date', function() {
+        var M2 = Backbone.Model.extend({
+            createdAt: Backprop.Date()
+        });
+
+        var m = new M2();
+
+        // Assignment to a Date object is OK:
+        var d = new Date;
+        m.createdAt = d;
+        assert.strictEqual(m.createdAt.constructor, Date);
+        assert.strictEqual(m.createdAt.toString(), d.toString());
+        assert.strictEqual(m.attributes.createdAt.toString(), d.toString());
+
+        // Assignment to a Unix timestamp (in milliseconds) is also OK:
+        var d = new Date(1e9);
+        m.createdAt = 1e9;
+        assert.strictEqual(m.createdAt.constructor, Date);
+        assert.strictEqual(m.createdAt.getYear(), 70);
+        assert.strictEqual(m.createdAt.toString(), d.toString());
+        assert.strictEqual(m.attributes.createdAt.toString(), d.toString());
+    });
 });
