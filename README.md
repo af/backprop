@@ -60,9 +60,12 @@ in your model definition:
 `Backprop.String` => ensures the property value is a string
 `Backprop.Boolean` => ensures the property value is a boolean
 `Backprop.Number` => ensures the property value is a Javascript Number
-`Backprop.Integer` => uses parseInt(x, 10) to ensure the value is an integer
-`Backprop.Date` => calls `new Date(x)`, passing in the assigned value as x. With these properties
-                   you can assign a Date instance, Unix timestamp (in milliseconds), or date string.
+`Backprop.Integer` => uses parseInt(x, 10) to ensure the value is an integer.
+                      Note that Javascript can only safely represent [integers
+                      between -2^53 and 2^53](http://www.2ality.com/2013/10/safe-integers.html).
+`Backprop.Date` => calls `new Date(x)`, passing in the assigned value as x.
+                   With these properties you can assign a Date instance, Unix
+                   timestamp (in milliseconds), or date string.
 `Backprop.Generic` => Performs no type coercion (you can provide your own `coerce` though)
 
 **Note!** Previous versions of Backprop used `Backbone.property()` for defining
