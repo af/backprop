@@ -3,10 +3,18 @@
 
     var Backprop = {};
 
+    // Transform a given input value, using a property spec object.
+    // propSpec: an object that defines a Backprop property. Supported keys
+    //           (see the README for explanations) include:
+    //           'coerce', 'choices', 'trim', 'max', 'min'
+    // inputVal: the value that the caller has assigned to the property
+    // fallbackValue (optional): a default value to use if the input is invalid
     function transformValue(propSpec, inputVal, fallbackValue) {
         var value = inputVal;
         if (typeof propSpec.coerce === 'function') value = propSpec.coerce(value);
 
+        // If an array of choices was passed in, validate that the input is one of
+        // the valid choices:
         var choices = propSpec.choices;
         if (choices && choices.constructor && choices.constructor.name === 'Array') {
             if (choices.indexOf(value) === -1) {
@@ -21,7 +29,7 @@
         return value;
     }
 
-    // Small class whose instances are used placeholders for the ES5 properties
+    // Small class whose instances are used as placeholders for the ES5 properties
     // that appear on models.
     function PropPlaceholder(spec) {
         this.spec = spec;
@@ -58,10 +66,9 @@
     };
 
 
-    // Monkeypatch Backbone to do two things:
-    //  * Add a new Backbone.property function, used to set up properties on models
-    //  * Replace Backbone.Model.extend with a version that parses property definitions
+    // Monkeypatch Backbone.Model.extend with a version that parses property definitions
     Backprop.monkeypatch = function(Backbone) {
+        // Deprecated way to create properties:
         Backbone.property = function(specObj) {
             console.log('Backbone.property() is deprecated- use Backprop.Generic instead');
             return new PropPlaceholder(specObj);
@@ -120,6 +127,7 @@
         };
     };
 
+    // The built-in shorthand properties follow:
     Backprop.Generic = makeShorthandProp(function(x) { return x; });
     Backprop.Boolean = makeShorthandProp(Boolean);
     Backprop.String = makeShorthandProp(String);
