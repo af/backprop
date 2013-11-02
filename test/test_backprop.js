@@ -1,19 +1,18 @@
 var assert = require('assert');
 var Backbone = require('backbone');
-
 var Backprop = require('../backprop');
 
-describe('Backprop monkeypatch', function() {
-    it('creates Backbone.property()', function() {
-        Backprop.monkeypatch(Backbone);
-        assert.equal(typeof Backbone.property, 'function');
+
+describe('Backprop extendModel', function() {
+    it('extends Backbone.Model and returns a new Model class', function() {
+        var baseModel = Backprop.extendModel(Backbone.Model);
+        assert.equal(baseModel, Backprop.Model);
     });
 });
 
-
 describe('A created model property', function() {
-    Backprop.monkeypatch(Backbone);
-    var M = Backbone.Model.extend({
+    Backprop.extendModel(Backbone.Model);
+    var M = Backprop.Model.extend({
         name: Backprop.String({ default: 'asdf', trim: true }),
         status: Backprop.String(),
         isAvailable: Backprop.Boolean({ default: false }),
@@ -51,7 +50,7 @@ describe('A created model property', function() {
 
     it('throws if their name is already in use by Backbone', function() {
         assert.throws(function() {
-            var M2 = Backbone.Model.extend({
+            var M2 = Backprop.Model.extend({
                 get: Backprop.Generic()
             });
         }, Error);
@@ -92,8 +91,8 @@ describe('A created model property', function() {
 
 
 describe('Property choice option', function() {
-    Backprop.monkeypatch(Backbone);
-    var M = Backbone.Model.extend({
+    Backprop.extendModel(Backbone.Model);
+    var M = Backprop.Model.extend({
         category: Backprop.String({ choices: ['books', 'electronics', 'music'] }),
         genre: Backprop.String({ choices: ['action', 'comedy'], default: 'action' }),
         price: Backprop.Number({ choices: [0.99, 1.50, '9.99'] }),
@@ -132,13 +131,13 @@ describe('Property choice option', function() {
 });
 
 describe('setProperties() method', function() {
-    Backprop.monkeypatch(Backbone);
+    Backprop.extendModel(Backbone.Model);
 
     var categoryConfig = { choices: ['books', 'electronics', 'music'] };
     var genreConfig = { choices: ['action', 'comedy'], default: 'action' };
     var priceConfig = { coerce: Number, choices: [0.95, 1.50, '9.99'] };
 
-    var M = Backbone.Model.extend({
+    var M = Backprop.Model.extend({
         category: Backprop.String(categoryConfig),
         genre: Backprop.String(genreConfig),
         price: Backprop.Number(priceConfig),
@@ -219,8 +218,9 @@ describe('setProperties() method', function() {
 
 
 describe('Max and min', function() {
-    Backprop.monkeypatch(Backbone);
-    var M = Backbone.Model.extend({
+    Backprop.extendModel(Backbone.Model);
+
+    var M = Backprop.Model.extend({
         myNum: Backprop.Number({ min: 100, max: 200 }),
         minOnly: Backprop.Number({ min: 100 }),
         maxOnly: Backprop.Number({ max: 200 }),
@@ -260,8 +260,8 @@ describe('Max and min', function() {
 
 
 describe('Property type coercion', function() {
-    Backprop.monkeypatch(Backbone);
-    var M = Backbone.Model.extend({
+    Backprop.extendModel(Backbone.Model);
+    var M = Backprop.Model.extend({
         myString: Backprop.String(),
         myNum: Backprop.Number(),
         myBool: Backprop.Boolean(),
@@ -338,8 +338,8 @@ describe('Property type coercion', function() {
 
 
 describe('Shorthand properties', function() {
-    Backprop.monkeypatch(Backbone);
-    var M = Backbone.Model.extend({
+    Backprop.extendModel(Backbone.Model);
+    var M = Backprop.Model.extend({
         name: Backprop.String({ default: 'asdf', trim: true }),
         age: Backprop.Number({ coerce: function(x) { return x + 1; } }),
         likes: Backprop.Integer(),
@@ -382,7 +382,7 @@ describe('Shorthand properties', function() {
     });
 
     it('works for Backprop.Generic', function() {
-        var M2 = Backbone.Model.extend({
+        var M2 = Backprop.Model.extend({
             foo: Backprop.Generic()
         });
 
@@ -398,7 +398,7 @@ describe('Shorthand properties', function() {
     });
 
     it('works for Backprop.Date', function() {
-        var M2 = Backbone.Model.extend({
+        var M2 = Backprop.Model.extend({
             createdAt: Backprop.Date()
         });
 

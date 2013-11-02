@@ -66,34 +66,35 @@
     };
 
 
-    // Monkeypatch Backbone.Model.extend with a version that parses property definitions
-    Backprop.monkeypatch = function(Backbone) {
-        // Deprecated way to create properties:
-        Backbone.property = function(specObj) {
-            console.log('Backbone.property() is deprecated- use Backprop.Generic instead');
-            return new PropPlaceholder(specObj);
-        };
+    // Backprop configuration method. Pass in the base model class that you want
+    // to extend. Before your model definitions, you will want to invoke it as
+    // follows:
+    //
+    // Backprop.extendModel(Backbone.Model);
+    Backprop.extendModel = function(BaseModel) {
 
-        // Override Backbone.Model.extend with our custom version:
-        var originalExtend = Backbone.Model.extend;
-        Backbone.Model.extend = function(protoAttrs, classAttrs) {
-            protoAttrs = protoAttrs || {};
-
-            // Add a setProperties() method on Backbone.Model's prototype.
-            // This sets a hash of values to the model, just like Backbone.Model.set().
-            // The difference is that this will apply transforms for all of the
-            // properties before setting.
-            protoAttrs.setProperties = function(attrs, options) {
+        // Add a setProperties() method on Backprop.Model's prototype.
+        // This sets a hash of values to the model, just like Backbone.Model.set().
+        // The difference is that this will apply transforms for all of the
+        // properties before setting.
+        Backprop.Model = BaseModel.extend({
+            setProperties: function(attrs, options) {
                 var schema = this.constructor._schema || {};
                 for (var name in attrs) {
                     var propSpec = schema[name] || {};
                     attrs[name] = transformValue(propSpec, attrs[name], this.get(name));
                 }
                 this.set(attrs, options);
-            };
+            }
+        });
+
+        // Use a modified version of Backbone.Model's extend(), so
+        // it can parse Backprop properties in model definitions
+        Backprop.Model.extend = function(protoAttrs, staticAttrs) {
+            protoAttrs = protoAttrs || {};
 
             // Apply Backbone.Model's original extend() function:
-            var objConstructor = originalExtend.apply(this, [].slice.call(arguments));
+            var objConstructor = BaseModel.extend.apply(this, [].slice.call(arguments));
 
             // Go through the prototype attributes and create ES5 properties for every
             // attribute that used Backbone.property():
@@ -107,6 +108,8 @@
             }
             return objConstructor;
         };
+
+        return Backprop.Model;
     };
 
     // Allow use of shorthand properties like "myprop: Backprop.Boolean()". This avoids

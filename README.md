@@ -28,17 +28,17 @@ You can install Backprop from npm with `npm install backprop`.
 Usage
 -----
 
-Initialize the plugin with:
+To use the plugin, add the following line to your app's initial config:
 
 ```js
-Backprop.monkeypatch(Backbone);
+Backprop.extendModel(Backbone.Model);
 ```
 
-This will replace Backbone.Model.extend with a version that parses the properties
-that you define on your models. In your model definitions, write something like:
+Then use Backprop.Model.extend (rather than Backbone's version) to create
+your models, with declarative properties in the model definition. For example:
 
 ```js
-var User = Backbone.Model.extend({
+var User = Backprop.Model.extend({
     name: Backprop.String(),
     numFollowers: Backprop.Number({ default: 0 })
 });
@@ -90,8 +90,8 @@ like `Backprop.String()`, note that the type coercion will happen before your
 For example:
 
 ```
-var Cat = Backbone.Model.extend({
-    lives: Backbone.Number({ coerce: function(x) { return x*9; })
+var Cat = Backprop.Model.extend({
+    lives: Backprop.Number({ coerce: function(x) { return x*9; })
 });
 
 var c = new Cat;
@@ -110,7 +110,7 @@ Specify values that the value must be less than/greater than (these can be used 
 or together). Most useful for numbers, but will work with any values that work with `<` and `>`.
 
 ```js
-var Beer = Backbone.Model.extend({
+var Beer = Backprop.Model.extend({
     milliliters = Backprop.Number({ min: 330, max: 1000 })
 });
 var b = new Beer;
@@ -132,7 +132,7 @@ not in the array is assigned to the property, the value set to the model will be
     c) `undefined`
 
 ```js
-var Beer = Backbone.Model.extend({
+var Beer = Backprop.Model.extend({
     style: Backprop.String({ choices: ['IPA', 'stout', 'ESB'], default: 'IPA' }),
     type: Backprop.String({ choices: ['on_tap', 'bottle'] })
 });
@@ -192,6 +192,8 @@ npm test
 
 Changelog
 ---------
+`0.4.0` - Remove Backbone.property() and Backprop.monkeypatch(). Use
+          Backprop.extendModel(Backbone.Model) instead.
 `0.3.0` - Add property shorthands like Backprop.Number, Backprop.String, etc
 `0.2.0` - Add Backbone.Model.prototype.setProperties()
 `0.1.0` - Initial release
