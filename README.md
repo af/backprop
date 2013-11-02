@@ -57,20 +57,20 @@ Defining Properties
 Backprop ships with a number of functions that can be used to create properties
 in your model definition:
 
-`Backprop.String` => ensures the property value is a string
-`Backprop.Boolean` => ensures the property value is a boolean
-`Backprop.Number` => ensures the property value is a Javascript Number
-`Backprop.Integer` => uses parseInt(x, 10) to ensure the value is an integer.
-                      Note that Javascript can only safely represent [integers
-                      between -2^53 and 2^53](http://www.2ality.com/2013/10/safe-integers.html).
-`Backprop.Date` => calls `new Date(x)`, passing in the assigned value as x.
-                   With these properties you can assign a Date instance, Unix
-                   timestamp (in milliseconds), or date string.
-`Backprop.Generic` => Performs no type coercion (you can provide your own `coerce` though)
+* `Backprop.String` => ensures the property value is a string
+* `Backprop.Boolean` => ensures the property value is a boolean
+* `Backprop.Number` => ensures the property value is a Javascript Number
+* `Backprop.Integer` => uses parseInt(x, 10) to ensure the value is an integer.
+                        Note that Javascript can only safely represent [integers
+                        between -2^53 and 2^53](http://www.2ality.com/2013/10/safe-integers.html).
+* `Backprop.Date` => calls `new Date(x)`, passing in the assigned value as x.
+                     With these properties you can assign a Date instance, Unix
+                     timestamp (in milliseconds), or date string.
+* `Backprop.Generic` => Performs no type coercion (you can provide your own `coerce` though)
 
 **Note!** Previous versions of Backprop used `Backbone.property()` for defining
-properties. This is now deprecated (and will be removed in a later release).
-`Backprop.Generic()` is a drop-in replacement for these older property definitions.
+properties. This is no longer supported– `Backprop.Generic()` is a drop-in
+replacement for these older property definitions.
 
 Each function takes an optional hash as its only argument. The following
 keys are supported to pre-filter data and make dealing with properties a bit more pleasant:
@@ -192,10 +192,10 @@ npm test
 
 Changelog
 ---------
-`0.4.0` - Remove Backbone.property() and Backprop.monkeypatch(). Use
-          Backprop.extendModel(Backbone.Model) instead.
-`0.3.0` - Add property shorthands like Backprop.Number, Backprop.String, etc
-`0.2.0` - Add Backbone.Model.prototype.setProperties()
+`0.4.0` - Removed Backbone.property() and Backprop.monkeypatch(). Use
+          Backprop.extendModel(Backbone.Model) instead of the latter.
+`0.3.0` - Added property shorthands like Backprop.Number, Backprop.String, etc
+`0.2.0` - Added Backbone.Model.prototype.setProperties()
 `0.1.0` - Initial release
 
 
