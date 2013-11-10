@@ -76,7 +76,7 @@ replacement for these older property definitions.
 Property Arguments
 ------------------
 
-Each function takes an optional hash as its only argument. The following
+Each property function takes an optional hash as its only argument. The following
 keys are supported to pre-filter data and make dealing with properties a bit more pleasant:
 
 ##### `default`
