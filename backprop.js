@@ -130,13 +130,18 @@
         };
     };
 
-    // The built-in shorthand properties follow:
-    Backprop.Generic = makeShorthandProp(function(x) { return x; });
-    Backprop.Boolean = makeShorthandProp(Boolean);
-    Backprop.String = makeShorthandProp(String);
-    Backprop.Number = makeShorthandProp(Number);
-    Backprop.Integer = makeShorthandProp(function(x) { return parseInt(x, 10); });
-    Backprop.Date = makeShorthandProp(function(x) { return new Date(x); });
+    // The built-in shorthand properties (aka fields) follow:
+    Backprop.fields = {
+        Generic: makeShorthandProp(function(x) { return x; }),
+        Boolean: makeShorthandProp(Boolean),
+        String: makeShorthandProp(String),
+        Number: makeShorthandProp(Number),
+        Integer: makeShorthandProp(function(x) { return parseInt(x, 10); }),
+        Date: makeShorthandProp(function(x) { return new Date(x); }),
+    };
+
+    // Alias all fields directly on Backprop's top level object for convenience:
+    for (var k in Backprop.fields) Backprop[k] = Backprop.fields[k];
 
     // Export for Node/Browserify, or fallback to a window assignment:
     if (typeof module !== 'undefined' && module.exports) module.exports = Backprop;
