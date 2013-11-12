@@ -10,6 +10,7 @@ describe('Backprop extendModel', function() {
     });
 });
 
+
 describe('A created model property', function() {
     Backprop.extendModel(Backbone.Model);
     var M = Backprop.Model.extend({
@@ -50,9 +51,7 @@ describe('A created model property', function() {
 
     it('throws if their name is already in use by Backbone', function() {
         assert.throws(function() {
-            var M2 = Backprop.Model.extend({
-                get: Backprop.Generic()
-            });
+            Backprop.Model.extend({ get: Backprop.Generic() });
         }, Error);
     });
 
@@ -129,6 +128,7 @@ describe('Property choice option', function() {
         assert.strictEqual(m.genre, 'comedy');
     });
 });
+
 
 describe('setProperties() method', function() {
     Backprop.extendModel(Backbone.Model);
@@ -412,7 +412,7 @@ describe('Shorthand properties', function() {
         assert.strictEqual(m.attributes.createdAt.toString(), d.toString());
 
         // Assignment to a Unix timestamp (in milliseconds) is also OK:
-        var d = new Date(1e9);
+        d = new Date(1e9);
         m.createdAt = 1e9;
         assert.strictEqual(m.createdAt.constructor, Date);
         assert.strictEqual(m.createdAt.getYear(), 70);
