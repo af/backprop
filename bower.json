@@ -1,0 +1,24 @@
+{
+  "name": "backprop",
+  "main": "backprop.js",
+  "version": "0.4.1",
+  "homepage": "https://github.com/af/backprop",
+  "authors": [
+    "Aaron Franks <aaron.franks+npm@gmail.com>"
+  ],
+  "description": "A small Backbone plugin that lets you use ECMAScript 5 properties on your Backbone models.",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "backbone",
+    "property",
+    "ES5"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "package.json",
+    "test"
+  ]
+}
