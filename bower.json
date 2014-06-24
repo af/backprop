@@ -1,7 +1,7 @@
 {
   "name": "backprop",
   "main": "backprop.js",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "homepage": "https://github.com/af/backprop",
   "authors": [
     "Aaron Franks <aaron.franks+npm@gmail.com>"

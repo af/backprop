@@ -213,7 +213,7 @@ describe('setProperties() method', function() {
         m.setProperties({ price: 0.95, x: 23 });
         assert.strictEqual(m.price, 0.95);
         assert.strictEqual(m.get('x'), 23);
-    })
+    });
 });
 
 
