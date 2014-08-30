@@ -11,7 +11,7 @@ mymodel.set('name', 'Bob');
 console.log(mymodel.get('name'));   // prints 'Bob'
 ```
 
-with Backprop you can write this instead (and it will have the same effect):
+with Backprop you can write this instead (and it will have the same effect, provided you have set up a `name` property):
 
 ```js
 mymodel.name = 'Fred';
