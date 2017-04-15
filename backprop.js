@@ -65,6 +65,36 @@
         });
     };
 
+    /**
+     * Attach properties to the given Object prototype
+     *
+     * Can be called with either a varargs style (name followed by a spec) or
+     * a single object which contains name/spec pairs
+     *
+     * Backprop.create(objProto, "username", {coerce: String}, "email", {coerce: String});
+     *
+     * Backprop.create(objProto, {
+     *      name:  {coerce: String},
+     *      email: {coerce: String}
+     * });
+     */
+    Backprop.create = function(proto, name, specObj) {
+        if (typeof proto !== "object") {
+            proto = proto.prototype;
+        }
+        if (arguments.length === 2) {
+            // support for object form
+            var obj = name;
+            for (var n in obj) {
+                new PropPlaceholder(obj[n]).createProperty(proto, n);
+            }
+        } else if (arguments.length > 2) {
+            // support for varargs form
+            for (var i = 1; i < arguments.length; i+=2) {
+                new PropPlaceholder(arguments[i+1]).createProperty(proto, arguments[i]);
+            }
+        }
+    };
 
     // Backprop configuration method. Pass in the base model class that you want
     // to extend. Before your model definitions, you will want to invoke it as
